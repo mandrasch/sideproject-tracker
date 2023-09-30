@@ -24,4 +24,4 @@ ddev npm install
 ```
 
 3. Followed this tutorial: https://laravel-news.com/crud-operations-using-laravel-livewire
-Beware: namespace for livewire changed to namespace App\Livewire; not \Http anymore
+Beware: namespace for livewire changed to namespace App\Livewire; not \Http anymore + you can't use addPost and addPost in the same component anymore
