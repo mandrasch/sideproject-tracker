@@ -7,9 +7,12 @@
 ```
 ddev composer require laravel/breeze --dev
 ddev artisan breeze:install
+ddev artisan migrate
+ddev npm install
 ```
 
-- Installed livewire: https://livewire.laravel.com/docs/quickstart
+Run:
 
-```ddev composer require livewire/livewire```
-
+```
+ddev npm run dev
+```
