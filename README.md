@@ -16,3 +16,7 @@ Run:
 ```
 ddev npm run dev
 ```
+
+
+https://laravel-news.com/crud-operations-using-laravel-livewire
+Beware: namespace for livewire changed to namespace App\Livewire; not \Http anymore
