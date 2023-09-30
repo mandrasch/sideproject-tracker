@@ -21,7 +21,7 @@
         <div class="card">
             <div class="card-body">
                 @if(!$addWebsite)
-                    <a wire:click="addWebsite()" class="btn btn-primary btn-sm float-right">Add New Website</a>
+                    <a wire:click="addNewWebsite()" class="btn btn-primary btn-sm float-right">Add New Website</a>
                 @endif
                 <div class="table-responsive">
                     <table class="table">

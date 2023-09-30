@@ -49,7 +49,7 @@ class Website extends Component
      * Open Add Website form
      * @return void
      */
-    public function addWebsite()
+    public function addNewWebsite()
     {
         $this->resetFields();
         $this->addWebsite = true;
