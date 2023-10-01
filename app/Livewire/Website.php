@@ -7,8 +7,8 @@ use App\Models\Website as Websites;
 
 class Website extends Component
 {
-
-    public $websites, $title, $description, $websiteId, $updateWebsite = false, $addWebsite = false;
+    // TODO: addWebsite and updateWebsite came from tutorial, is there a simpler way?
+    public $websites, $title, $url, $description, $websiteId, $updateWebsiteView = false, $addWebsiteView = false;
 
     /**
      * delete action listener
@@ -17,6 +17,7 @@ class Website extends Component
         'deleteWebsiteListener'=>'deleteWebsite'
     ];
 
+    // TODO: We could add rules via new php attributes https://livewire.laravel.com/docs/validation
     /**
      * List of add/edit form rules
      */
@@ -31,7 +32,7 @@ class Website extends Component
      */
     public function resetFields(){
         $this->title = '';
-        // TODO: add url
+        $this->url = '';
         $this->description = '';
     }
 
@@ -41,7 +42,8 @@ class Website extends Component
      */
     public function render()
     {
-        $this->websites = Websites::select('id', 'title', 'description')->get();
+        // TODO: add pagination?
+        $this->websites = Websites::get();
         return view('livewire.website.website-list');
     }
 
@@ -49,11 +51,11 @@ class Website extends Component
      * Open Add Website form
      * @return void
      */
-    public function addNewWebsite()
+    public function addWebsite()
     {
         $this->resetFields();
-        $this->addWebsite = true;
-        $this->updateWebsite = false;
+        $this->addWebsiteView = true;
+        $this->updateWebsiteView = false;
     }
     /**
      * store the user inputted Website data in the Websites table
@@ -65,12 +67,14 @@ class Website extends Component
         try {
             Websites::create([
                 'title' => $this->title,
+                'url'=> $this->url,
                 'description' => $this->description
             ]);
             session()->flash('success','Website Created Successfully!!');
             $this->resetFields();
-            $this->addWebsite = false;
+            $this->addWebsiteView = false;
         } catch (\Exception $ex) {
+            dd($ex);
             session()->flash('error','Something goes wrong!!');
         }
     }
@@ -87,10 +91,11 @@ class Website extends Component
                 session()->flash('error','Website not found');
             } else {
                 $this->title = $website->title;
+                $this->url = $website->url;
                 $this->description = $website->description;
                 $this->websiteId = $website->id;
-                $this->updateWebsite = true;
-                $this->addWebsite = false;
+                $this->updateWebsiteView = true;
+                $this->addWebsiteView = false;
             }
         } catch (\Exception $ex) {
             session()->flash('error','Something goes wrong!!');
@@ -108,11 +113,12 @@ class Website extends Component
         try {
             Websites::whereId($this->websiteId)->update([
                 'title' => $this->title,
+                'url' => $this->url,
                 'description' => $this->description
             ]);
             session()->flash('success','Website Updated Successfully!!');
             $this->resetFields();
-            $this->updateWebsite = false;
+            $this->updateWebsiteView = false;
         } catch (\Exception $ex) {
             session()->flash('success','Something goes wrong!!');
         }
@@ -124,8 +130,8 @@ class Website extends Component
      */
     public function cancelWebsite()
     {
-        $this->addWebsite = false;
-        $this->updateWebsite = false;
+        $this->addWebsiteView = false;
+        $this->updateWebsiteView = false;
         $this->resetFields();
     }
 

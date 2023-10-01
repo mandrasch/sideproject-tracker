@@ -14,16 +14,18 @@ use App\Livewire\Counter;
 |
 */
 
+// The endpoint which is called from other websites
+Route::post('/track-page-view', 'TrackPageViewController@trackPageView');
+
+// Not-logged in start page
 Route::view('/', 'welcome');
 
+// Backend related routes for administration:
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
-Route::get('/counter', Counter::class);
 
 require __DIR__.'/auth.php';

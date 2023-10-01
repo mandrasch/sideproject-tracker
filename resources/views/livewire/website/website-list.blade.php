@@ -10,34 +10,43 @@
                 {{ session()->get('error') }}
             </div>
         @endif
-        @if($addWebsite)
+        <!-- TODO: Use same view, just edit the action? -->
+        @if($addWebsiteView)
             @include('livewire.website.website-create')
         @endif
-        @if($updateWebsite)
-            @include('livewire.website.website-update')
+        @if($updateWebsiteView)
+            @include('livewire.website.website-create')
         @endif
     </div>
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                @if(!$addWebsite)
-                    <a wire:click="addNewWebsite()" class="btn btn-primary btn-sm float-right">Add New Website</a>
+                @if (count($websites) > 0)
+                @if(!$addWebsiteView)
+                    <button wire:click="addWebsite()" class="btn btn-primary btn-sm float-right">Add New Website</button>
                 @endif
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th>URL</th>
+                            <th>Tracking Script Key</th>
                             <th>Description</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @if (count($websites) > 0)
                             @foreach ($websites as $website)
                                 <tr>
                                     <td>
                                         {{$website->title}}
+                                    </td>
+                                    <td>
+                                        {{$website->url}}
+                                    </td>
+                                    <td>
+                                        {{$website->tracking_script_key}}
                                     </td>
                                     <td>
                                         {{$website->description}}
@@ -48,15 +57,16 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @else
-                            <tr>
-                                <td colspan="3" align="center">
-                                    No Websites Found.
-                                </td>
-                            </tr>
-                        @endif
                         </tbody>
                     </table>
+                    @else
+                        @if(!$addWebsiteView)
+                        <div class="py-6 flex flex-col justify-center grow-0">
+                            <p class="py-6 text-center">No websites found yet, add the first one!</p>
+                            <button wire:click="addWebsite()" class="btn btn-primary btn-sm w-auto mx-auto">Add New Website</button>
+                        </div>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>

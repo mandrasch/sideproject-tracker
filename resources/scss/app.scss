@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "button";
+
+/* just for testing:
 label{
     color:red !important;
 }
+*/
